@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "645897709748",
+    "project_id": "mydrivey-2ad30",
+    "storage_bucket": "mydrivey-2ad30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645897709748:android:e7f74d64e0cc8c13394fe1",
+        "android_client_info": {
+          "package_name": "com.example.drivey_files"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8RtIJv1NU8bWeXItNWNja248aD-7Hgc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
