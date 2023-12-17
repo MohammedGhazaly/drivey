@@ -1,8 +1,13 @@
+import 'package:drivey_files/controllers/auth_controller.dart';
 import 'package:drivey_files/widgets/login_screen/login_screen_body.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  final AuthController authController =
+      Get.put<AuthController>(AuthController());
 
   @override
   Widget build(BuildContext context) {

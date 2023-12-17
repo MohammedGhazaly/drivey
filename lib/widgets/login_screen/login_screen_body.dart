@@ -1,3 +1,4 @@
+import 'package:drivey_files/controllers/auth_controller.dart';
 import 'package:drivey_files/core/utils/app_assets.dart';
 import 'package:drivey_files/core/utils/app_colors.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
@@ -77,7 +78,9 @@ class LoginScreenBody extends StatelessWidget {
                       ),
                       backgroundColor: Colors.deepOrangeAccent.withOpacity(0.8),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      await Get.find<AuthController>().login();
+                    },
                     child: Text(
                       "Let's go",
                       style: AppStyles.textStyle(

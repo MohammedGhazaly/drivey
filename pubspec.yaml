@@ -48,7 +48,7 @@ dependencies:
   audioplayers:
   chewie:
   video_player:
-  flutter_downloader:
+  flutter_downloader: ^1.11.5
   permission_handler:
 
   flutter:
