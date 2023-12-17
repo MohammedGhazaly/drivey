@@ -29,42 +29,43 @@ class RecentFiles extends StatelessWidget {
           SizedBox(
             height: 75,
             child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: 75,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Image.asset(
-                                "assets/images/image.jpg",
-                                fit: BoxFit.cover,
-                              ),
-                              // child: CachedNetworkImage(
-                              //   width: 75,
-                              //   imageUrl: AppValues.testImage,
-                              // ),
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  width: 75,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Image.asset(
+                              "assets/images/image.jpg",
+                              fit: BoxFit.cover,
                             ),
+                            // child: CachedNetworkImage(
+                            //   width: 75,
+                            //   imageUrl: AppValues.testImage,
+                            // ),
                           ),
-                          // constSizedBox(height: 3,),
-                          Text(
-                            "Photp.png",
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: AppStyles.textStyle(
-                                fontSize: 10, color: AppColors.textColor),
-                          )
-                        ],
-                      ),
+                        ),
+                        // constSizedBox(height: 3,),
+                        Text(
+                          "Photp.png",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: AppStyles.textStyle(
+                              fontSize: 10, color: AppColors.textColor),
+                        )
+                      ],
                     ),
-                  );
-                }),
+                  ),
+                );
+              },
+            ),
           )
         ],
       ),
