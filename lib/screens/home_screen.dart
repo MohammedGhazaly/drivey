@@ -1,4 +1,5 @@
 import 'package:drivey_files/controllers/custom_tab_controller.dart';
+import 'package:drivey_files/screens/files_screen.dart';
 import 'package:drivey_files/widgets/home_screen/home_header.dart';
 import 'package:drivey_files/screens/storage_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,7 +39,7 @@ class HomeScreen extends StatelessWidget {
               GetBuilder<CustomTabController>(builder: (controller) {
                 return controller.tab == "storage"
                     ? StorageScreen()
-                    : Container();
+                    : FilesScreen();
               }),
             ],
           ),
