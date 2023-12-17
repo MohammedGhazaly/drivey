@@ -1,5 +1,5 @@
 import 'package:drivey_files/widgets/home_screen/home_header.dart';
-import 'package:drivey_files/widgets/storage_screen/home_storage.dart';
+import 'package:drivey_files/screens/storage_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +28,13 @@ class HomeScreen extends StatelessWidget {
           ),
           preferredSize: Size.fromHeight(30),
         ),
-        body: Column(
-          children: [
-            HomeHeader(),
-            StorageScreen(),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              HomeHeader(),
+              StorageScreen(),
+            ],
+          ),
         ));
   }
 }
