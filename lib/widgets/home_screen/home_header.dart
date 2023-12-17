@@ -1,10 +1,12 @@
+import 'package:drivey_files/controllers/custom_tab_controller.dart';
 import 'package:drivey_files/core/utils/app_colors.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
 import 'package:drivey_files/widgets/home_screen/custom_tab_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+  HomeHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,23 +51,33 @@ class HomeHeader extends StatelessWidget {
                   ),
                   // BoxShadow()
                 ]),
-            child: Row(
-              children: [
-                Expanded(
+            child: GetBuilder<CustomTabController>(builder: (controller) {
+              return Row(
+                children: [
+                  Expanded(
+                      child: InkWell(
+                    onTap: () {
+                      controller.changeTab("storage");
+                    },
                     child: CustomTabBar(
-                  text: "Storage",
-                  isSelected: true,
-                )),
-                SizedBox(
-                  width: 20,
-                ),
-                Expanded(
+                      text: "Storage",
+                      isSelected: controller.tab == "storage",
+                    ),
+                  )),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                      child: InkWell(
+                    onTap: () {
+                      controller.changeTab("files");
+                    },
                     child: CustomTabBar(
-                  text: "Files",
-                  isSelected: false,
-                )),
-              ],
-            ),
+                        text: "Files", isSelected: controller.tab == "files"),
+                  )),
+                ],
+              );
+            }),
           ),
         ],
       ),
