@@ -35,7 +35,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   cupertino_icons: ^1.0.2
   eva_icons_flutter: null
-  file_picker: null
+  file_picker: ^6.1.1
   firebase_auth: null
   firebase_core: null
   firebase_storage: null
@@ -46,7 +46,7 @@ dependencies:
   get: null
   google_fonts: null
   google_sign_in: null
-  mime: null
+  mime: ^1.0.4
   path_provider: null
   permission_handler: null
   url_launcher: null
