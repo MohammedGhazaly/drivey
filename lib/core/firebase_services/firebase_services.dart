@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,7 +30,7 @@ class FirebaseService {
         .snapshots();
   }
 
-  static uploadFile({required String folderName}) async {
+  static uploadFile({required String folderId}) async {
     List<File> files = [];
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
@@ -67,16 +66,26 @@ class FirebaseService {
             .get()
             .then((value) => value.docs.length);
         //  Uploading file to storage
-        log("FileType: ${fileType}");
-        log("filteredFileType: ${filteredFileType}");
-        log("pathParts: ${pathParts}");
-        log("fileName: ${fileName}");
-        log("extenstion: ${extenstion}");
-        log("compressedFile: ${compressedFile}");
-        Get.showOverlay;
-
-        uploadToFireStorage(
-            file: compressedFile, length: length, type: fileType);
+        // log("FileType: ${fileType}");
+        // log("filteredFileType: ${filteredFileType}");
+        // log("pathParts: ${pathParts}");
+        // log("fileName: ${fileName}");
+        // log("extenstion: ${extenstion}");
+        // log("compressedFile: ${compressedFile}");
+        Get.snackbar("Uploading file.", "This my take sometime, please wait.",
+            duration: Duration(seconds: 15));
+        await uploadToFireStorage(
+            file: compressedFile,
+            length: length,
+            type: fileType,
+            fileName: fileName!,
+            filteredFileType: filteredFileType,
+            extenstion: extenstion!,
+            folderId: folderId,
+            fileSize: ((compressedFile.readAsBytesSync()).lengthInBytes / 1024)
+                .round());
+        Get.closeCurrentSnackbar();
+        Get.snackbar("File uploaded.", "Thank your for your patience.");
       }
     }
   }
@@ -113,13 +122,21 @@ class FirebaseService {
     }
   }
 
-  static Future<void> uploadToFireStorage(
-      {required File file, required int length, required String type}) async {
+  static Future<void> uploadToFireStorage({
+    required File file,
+    required int length,
+    required String type,
+    required String fileName,
+    required String filteredFileType,
+    required String extenstion,
+    required String folderId,
+    required int fileSize,
+  }) async {
     UploadTask uploadTask = FirebaseStorage.instance
         .ref()
         .child("files")
         .child(FirebaseAuth.instance.currentUser!.uid)
-        .child("File $length")
+        .child("File $length: $fileName")
         .putFile(file, SettableMetadata(contentType: type));
     // uploadTask.snapshotEvents.listen((event) {
     //   print(object);
@@ -127,5 +144,36 @@ class FirebaseService {
     TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
 
     String fileUrl = await taskSnapshot.ref.getDownloadURL();
+    // Saving data in firestore for each user
+    await saveDataInFireStare(
+        fileUrl: fileUrl,
+        fileName: fileName,
+        filteredFileType: filteredFileType,
+        extenstion: extenstion,
+        folderId: folderId,
+        fileSize: fileSize);
+  }
+
+  static saveDataInFireStare({
+    required String fileUrl,
+    required String fileName,
+    required String filteredFileType,
+    required String extenstion,
+    required String folderId,
+    required int fileSize,
+  }) async {
+    await AppValues.userCollection
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("files")
+        .add({
+      "file_url": fileUrl,
+      "file_name": fileName,
+      "file_type": filteredFileType,
+      "file_extenstion": extenstion,
+      // TODO => We will change this later
+      "folder_id": "L2Puohu08DZT5Q4tl6h3",
+      "file_size": fileSize,
+      "date_uploaded": FieldValue.serverTimestamp(),
+    });
   }
 }

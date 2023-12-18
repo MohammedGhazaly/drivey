@@ -44,7 +44,7 @@ class FilesScreenModalBottomSheetWidget extends StatelessWidget {
           ),
           InkWell(
             onTap: () async {
-              await FirebaseService.uploadFile(folderName: "");
+              await FirebaseService.uploadFile(folderId: "");
             },
             child: Row(
               children: [
