@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:video_compress/video_compress.dart';
 
 class FirebaseService {
   static Future<void> uploadFolder({required String name}) async {
@@ -47,10 +49,14 @@ class FirebaseService {
         List<String?> pathParts = file.path.split("/");
         String? fileName = pathParts.last;
         String? extenstion = fileName?.split(".").last;
-        File compressedFile = await compressImage(file, filteredFileType);
         if (filteredFileType == "image") {
-          print("sssssssssss");
-          print(compressedFile);
+          File compressedImage = await compressImage(file);
+          print("IMAGE");
+          print(compressedImage);
+        } else if (filteredFileType == "video") {
+          File compressedVideo = await compressVideo(file);
+          log("VIDEO");
+          log(compressedVideo.path);
         }
         // Getting compressed Files
         // print(compressedFile);
@@ -59,17 +65,26 @@ class FirebaseService {
   }
 
   // Compress files function
-  static Future<File> compressImage(File file, String fileType) async {
+  static Future<File> compressImage(File file) async {
     Uuid uuid = Uuid();
     String randomStrng = uuid.v4();
 
     Directory directory = await getTemporaryDirectory();
+
     String targetPath = directory.path + "/${randomStrng}.jpg";
     XFile? result = await FlutterImageCompress.compressAndGetFile(
         file.path, targetPath,
-        quality: 70);
+        quality: 50);
     return File(result!.path);
 
     // else if (fileType == "video") {}
+  }
+
+  static Future<File> compressVideo(File file) async {
+    MediaInfo? info = await VideoCompress.compressVideo(file.path,
+        quality: VideoQuality.MediumQuality,
+        deleteOrigin: false,
+        includeAudio: true);
+    return info!.file!;
   }
 }
