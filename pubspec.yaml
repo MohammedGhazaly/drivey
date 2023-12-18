@@ -42,7 +42,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_downloader: ^1.11.5
-  flutter_image_compress: null
+  flutter_image_compress: ^2.1.0
   get: null
   google_fonts: null
   google_sign_in: null
@@ -50,7 +50,7 @@ dependencies:
   path_provider: null
   permission_handler: null
   url_launcher: null
-  uuid: null
+  uuid: ^4.2.2
   video_player: null
 
 dev_dependencies:
