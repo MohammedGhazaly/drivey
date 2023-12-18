@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drivey_files/controllers/upload_folder_controller.dart';
+import 'package:drivey_files/core/firebase_services/firebase_services.dart';
 import 'package:drivey_files/core/utils/app_assets.dart';
 import 'package:drivey_files/core/utils/app_colors.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FoldersSection extends StatelessWidget {
   const FoldersSection({super.key});
@@ -10,58 +14,80 @@ class FoldersSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: 10,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              // color: Colors.grey,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    offset: const Offset(10, 10),
-                    blurRadius: 5),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Image.asset(
-                    AppAssets.folderPath,
-                    fit: BoxFit.fill,
-                  ),
+      child: GetX<FoldersFilesController>(builder: (controller) {
+        if (controller != null && controller.foldersList != null) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: controller.foldersList.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+            itemBuilder: (context, index) {
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  // color: Colors.grey,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        offset: const Offset(10, 10),
+                        blurRadius: 5),
+                  ],
                 ),
-                Text(
-                  "My folder",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppStyles.textStyle(
-                    fontSize: 12,
-                    color: AppColors.textColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Image.asset(
+                        AppAssets.folderPath,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Text(
+                      controller.foldersList[index].folderName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppStyles.textStyle(
+                        fontSize: 12,
+                        color: AppColors.textColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseService.getFoldersSnapShot(
+                            folderId: controller.foldersList[index].id),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(
+                              "${snapshot.data?.docs.length ?? 0} files",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppStyles.textStyle(
+                                fontSize: 10,
+                                color: AppColors.textColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            );
+                          } else {
+                            return Text(
+                              "0 files",
+                              style: AppStyles.textStyle(
+                                fontSize: 10,
+                                color: AppColors.textColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            );
+                          }
+                        })
+                  ],
                 ),
-                Text(
-                  "5 files",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppStyles.textStyle(
-                    fontSize: 10,
-                    color: AppColors.textColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
-              ],
-            ),
+              );
+            },
           );
-        },
-      ),
+        } else {
+          return CircularProgressIndicator();
+        }
+      }),
     );
   }
 }

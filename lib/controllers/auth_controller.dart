@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:drivey_files/core/values/app_collections.dart';
+import 'package:drivey_files/core/utils/app_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +20,9 @@ class AuthController extends GetxController {
   Future<void> login() async {
     try {
       GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      print("sssssssssssssssssss");
+      print(googleUser);
+
       if (googleUser != null) {
         GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
@@ -28,7 +31,7 @@ class AuthController extends GetxController {
         UserCredential userCredential =
             await firebaseAuth.signInWithCredential(credential);
         User? user = userCredential.user;
-        AppCollections.userCollection.doc(user!.uid).set({
+        AppValues.userCollection.doc(user!.uid).set({
           "user_name": user.displayName,
           "profile_pic": user.photoURL,
           "email": user.email,
@@ -37,7 +40,7 @@ class AuthController extends GetxController {
         });
       }
     } catch (e) {
-      print("SSSSSSSSSSSSSSS");
+      print(e);
       if (e is PlatformException) {
         if (e.code == "network_error") {
           Get.snackbar(

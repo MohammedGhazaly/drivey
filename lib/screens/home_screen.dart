@@ -45,8 +45,10 @@ class HomeScreen extends StatelessWidget {
             elevation: 0,
             leading: IconButton(
               onPressed: () async {
+                GoogleSignIn googleSignIn = GoogleSignIn();
+                // await googleSignIn.disconnect();
+                await googleSignIn.signOut();
                 await FirebaseAuth.instance.signOut();
-                await GoogleSignIn().signOut();
               },
               icon: Icon(
                 Icons.logout_rounded,

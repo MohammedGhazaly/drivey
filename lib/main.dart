@@ -1,3 +1,4 @@
+import 'package:drivey_files/core/singeltons/connectivity_singelton.dart';
 import 'package:drivey_files/firebase_options.dart';
 import 'package:drivey_files/screens/login_screen.dart';
 import 'package:drivey_files/screens/root_screen.dart';
@@ -10,6 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  ConnectivitySingelton.getInstnce();
   runApp(const MyApp());
 }
 

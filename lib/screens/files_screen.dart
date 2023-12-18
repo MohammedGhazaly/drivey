@@ -1,11 +1,15 @@
+import 'package:drivey_files/controllers/upload_folder_controller.dart';
 import 'package:drivey_files/core/utils/app_colors.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
 import 'package:drivey_files/widgets/files_screen/folders_section.dart';
 import 'package:drivey_files/widgets/files_screen/recent_files.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FilesScreen extends StatelessWidget {
-  const FilesScreen({super.key});
+  FilesScreen({super.key});
+  final FoldersFilesController uploadFolderController =
+      Get.put(FoldersFilesController());
 
   @override
   Widget build(BuildContext context) {
