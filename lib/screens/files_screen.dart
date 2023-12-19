@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 
 class FilesScreen extends StatelessWidget {
   FilesScreen({super.key});
-  final FoldersFilesController uploadFolderController =
-      Get.put(FoldersFilesController());
+  final FilesAndFolderController uploadFolderController =
+      Get.put(FilesAndFolderController());
 
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,7 @@ class FoldersSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: GetX<FoldersFilesController>(builder: (controller) {
+      child: GetX<FilesAndFolderController>(builder: (controller) {
         if (controller != null && controller.foldersList != null) {
           return GridView.builder(
             shrinkWrap: true,

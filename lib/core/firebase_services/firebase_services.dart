@@ -6,12 +6,8 @@ import 'package:drivey_files/core/utils/helper_functions.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:mime/mime.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:uuid/uuid.dart';
-import 'package:video_compress/video_compress.dart';
 
 class FirebaseService {
   static Future<void> uploadFolder({required String name}) async {
