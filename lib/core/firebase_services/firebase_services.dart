@@ -133,10 +133,13 @@ class FirebaseService {
     required String folderId,
     required int fileSize,
   }) async {
-    await AppValues.userCollection
+    final tempDoc = AppValues.userCollection
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("files")
-        .add({
+        .doc();
+
+    await tempDoc.set({
+      "file_id": tempDoc.id,
       "file_url": fileUrl,
       "file_name": fileName,
       "file_type": filteredFileType,
@@ -146,5 +149,19 @@ class FirebaseService {
       "file_size": fileSize,
       "date_uploaded": FieldValue.serverTimestamp(),
     });
+
+    // await AppValues.userCollection
+    //     .doc(FirebaseAuth.instance.currentUser!.uid)
+    //     .collection("files")
+    //     .add({
+    //   "file_url": fileUrl,
+    //   "file_name": fileName,
+    //   "file_type": filteredFileType,
+    //   "file_extenstion": extenstion,
+    //   // TODO => We will change this later to add folder ID
+    //   "folder_id": "L2Puohu08DZT5Q4tl6h3",
+    //   "file_size": fileSize,
+    //   "date_uploaded": FieldValue.serverTimestamp(),
+    // });
   }
 }
