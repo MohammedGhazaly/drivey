@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drivey_files/core/utils/app_values.dart';
+import 'package:drivey_files/core/utils/helper_functions.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -53,9 +54,9 @@ class FirebaseService {
         late File compressedFile;
 
         if (filteredFileType == "image") {
-          compressedFile = await compressImage(file);
+          compressedFile = await AppHelpersFunctions.compressImage(file);
         } else if (filteredFileType == "video") {
-          compressedFile = await compressVideo(file);
+          compressedFile = await AppHelpersFunctions.compressVideo(file);
         } else {
           compressedFile = file;
         }
@@ -91,36 +92,6 @@ class FirebaseService {
   }
 
   // Compress files function
-  static Future<File> compressImage(File file) async {
-    try {
-      Uuid uuid = Uuid();
-      String randomStrng = uuid.v4();
-
-      Directory directory = await getTemporaryDirectory();
-
-      String targetPath = directory.path + "/${randomStrng}.jpg";
-      XFile? result = await FlutterImageCompress.compressAndGetFile(
-          file.path, targetPath,
-          quality: 50);
-      return File(result!.path);
-    } catch (e) {
-      return file;
-    }
-
-    // else if (fileType == "video") {}
-  }
-
-  static Future<File> compressVideo(File file) async {
-    try {
-      MediaInfo? info = await VideoCompress.compressVideo(file.path,
-          quality: VideoQuality.MediumQuality,
-          deleteOrigin: false,
-          includeAudio: true);
-      return info!.file!;
-    } catch (e) {
-      return file;
-    }
-  }
 
   static Future<void> uploadToFireStorage({
     required File file,
@@ -170,7 +141,7 @@ class FirebaseService {
       "file_name": fileName,
       "file_type": filteredFileType,
       "file_extenstion": extenstion,
-      // TODO => We will change this later
+      // TODO => We will change this later to add folder ID
       "folder_id": "L2Puohu08DZT5Q4tl6h3",
       "file_size": fileSize,
       "date_uploaded": FieldValue.serverTimestamp(),
