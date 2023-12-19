@@ -29,7 +29,7 @@ class RecentFiles extends StatelessWidget {
           ),
           GetX<FilesAndFolderController>(builder: (controller) {
             return SizedBox(
-              height: 75,
+              height: 90,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: controller.recentFiles.length,
@@ -41,22 +41,11 @@ class RecentFiles extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.network(
-                                  controller.recentFiles[index].url,
-                                  fit: BoxFit.cover,
-                                )
-                                //     Image.asset(
-                                //   "assets/images/image.jpg",
-                                //   fit: BoxFit.cover,
-                                // ),
-                                // child: CachedNetworkImage(
-                                //   width: 75,
-                                //   imageUrl: AppValues.testImage,
-                                // ),
-                                ),
+                          CustomImageWidget(
+                            extenstion:
+                                controller.recentFiles[index].extenstion,
+                            fileType: controller.recentFiles[index].type,
+                            url: controller.recentFiles[index].url,
                           ),
                           // constSizedBox(height: 3,),
                           Text(
@@ -75,6 +64,39 @@ class RecentFiles extends StatelessWidget {
             );
           }),
         ],
+      ),
+    );
+  }
+}
+
+class CustomImageWidget extends StatelessWidget {
+  final String extenstion;
+  final String fileType;
+  final String url;
+  const CustomImageWidget({
+    super.key,
+    required this.extenstion,
+    required this.fileType,
+    required this.url,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    print(url);
+    return Expanded(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: fileType == "image"
+            ? CachedNetworkImage(
+                fit: BoxFit.cover,
+                width: 75,
+                imageUrl: url,
+              )
+            : Image.asset(
+                "assets/images/${extenstion}.png",
+                fit: BoxFit.cover,
+                width: 75,
+              ),
       ),
     );
   }
