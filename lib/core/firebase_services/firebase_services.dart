@@ -70,7 +70,7 @@ class FirebaseService {
         // log("extenstion: ${extenstion}");
         // log("compressedFile: ${compressedFile}");
         Get.snackbar("Uploading file.", "This my take sometime, please wait.",
-            duration: Duration(seconds: 15));
+            duration: Duration(minutes: 15));
         await uploadToFireStorage(
             file: compressedFile,
             length: length,
@@ -81,10 +81,10 @@ class FirebaseService {
             folderId: folderId,
             fileSize: ((compressedFile.readAsBytesSync()).lengthInBytes / 1024)
                 .round());
-        Get.closeCurrentSnackbar();
-        Get.snackbar("File uploaded.", "Thank your for your patience.");
       }
     }
+    Get.closeCurrentSnackbar();
+    Get.snackbar("File uploaded.", "Thank your for your patience.");
   }
 
   // Compress files function
@@ -141,7 +141,7 @@ class FirebaseService {
       "file_type": filteredFileType,
       "file_extenstion": extenstion,
       // TODO => We will change this later to add folder ID
-      "folder_id": "L2Puohu08DZT5Q4tl6h3",
+      "folder_id": folderId,
       "file_size": fileSize,
       "date_uploaded": FieldValue.serverTimestamp(),
     });
