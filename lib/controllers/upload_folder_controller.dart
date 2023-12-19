@@ -19,7 +19,7 @@ class FilesAndFolderController extends GetxController {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("files")
         .orderBy("date_uploaded", descending: true)
-        .limit(10)
+        .limit(25)
         .snapshots()
         .map((querySnapShot) {
       final List<FileModel> files = [];

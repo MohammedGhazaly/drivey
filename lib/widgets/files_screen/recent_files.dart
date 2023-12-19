@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drivey_files/controllers/upload_folder_controller.dart';
 import 'package:drivey_files/core/utils/app_colors.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
+import 'package:drivey_files/widgets/files_screen/custom_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +30,7 @@ class RecentFiles extends StatelessWidget {
           ),
           GetX<FilesAndFolderController>(builder: (controller) {
             return SizedBox(
-              height: 90,
+              height: 75,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: controller.recentFiles.length,
@@ -37,7 +38,7 @@ class RecentFiles extends StatelessWidget {
                   return SizedBox(
                     width: 75,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -64,39 +65,6 @@ class RecentFiles extends StatelessWidget {
             );
           }),
         ],
-      ),
-    );
-  }
-}
-
-class CustomImageWidget extends StatelessWidget {
-  final String extenstion;
-  final String fileType;
-  final String url;
-  const CustomImageWidget({
-    super.key,
-    required this.extenstion,
-    required this.fileType,
-    required this.url,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    print(url);
-    return Expanded(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: fileType == "image"
-            ? CachedNetworkImage(
-                fit: BoxFit.cover,
-                width: 75,
-                imageUrl: url,
-              )
-            : Image.asset(
-                "assets/images/${extenstion}.png",
-                fit: BoxFit.cover,
-                width: 75,
-              ),
       ),
     );
   }
