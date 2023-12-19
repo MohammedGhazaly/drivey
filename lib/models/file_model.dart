@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class FileModel {
   late final String fileId;
   late final String folderId;
@@ -6,18 +8,17 @@ class FileModel {
   late final String extenstion;
   late final String type;
   late final int size;
-  // late final DateTime dateUploaded;
+  late final Timestamp? dateUploaded;
 
-  FileModel({
-    required this.name,
-    required this.fileId,
-    required this.folderId,
-    required this.url,
-    required this.type,
-    required this.extenstion,
-    required this.size,
-    // required this.dateUploaded
-  });
+  FileModel(
+      {required this.name,
+      required this.fileId,
+      required this.folderId,
+      required this.url,
+      required this.type,
+      required this.extenstion,
+      required this.size,
+      required this.dateUploaded});
   factory FileModel.fromFireStore(
       {required Map<String, dynamic> fireStoreData}) {
     return FileModel(
@@ -28,7 +29,7 @@ class FileModel {
       type: fireStoreData["file_type"],
       extenstion: fireStoreData["file_extenstion"],
       size: fireStoreData["file_size"],
-      // dateUploaded: fireStoreData["date_uploaded"],
+      dateUploaded: fireStoreData["date_uploaded"] ?? Timestamp.now(),
     );
   }
 }

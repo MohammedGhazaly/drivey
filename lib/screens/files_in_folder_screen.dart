@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drivey_files/core/firebase_services/firebase_services.dart';
 import 'package:drivey_files/core/utils/app_assets.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
+import 'package:drivey_files/models/file_model.dart';
 import 'package:drivey_files/widgets/files_in_folder_screen/download_remove_bottom_sheet.dart';
+import 'package:drivey_files/widgets/files_in_folder_screen/files_grid_view.dart';
 import 'package:drivey_files/widgets/files_screen/custom_image_widget.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,72 +39,48 @@ class FilesInFolderScreen extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      body: FilesGridView(),
-    );
-  }
-}
-
-class FilesGridView extends StatelessWidget {
-  const FilesGridView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: GridView.builder(
-          itemCount: 10,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12),
-          itemBuilder: (context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      "assets/images/doc.png",
-                      fit: BoxFit.cover,
-                      // width: 75,
-                    ),
-                  ),
+      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: FirebaseService.getFilesForSelectedFolder(folderId: folderId),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: const CircularProgressIndicator(
+                  color: Colors.deepOrange,
                 ),
-                SizedBox(
-                  height: 6,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Text(
-                        "Image one",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppStyles.textStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500),
+                    Text("Couldn't get data, please try again later."),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.deepOrange,
                       ),
-                    ),
-                    InkWell(
-                      overlayColor: MaterialStateProperty.resolveWith((states) {
-                        return Colors.transparent;
-                      }),
-                      onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return DownloadRemoveBottomSheet();
-                            });
+                      onPressed: () {
+                        FirebaseService.getFilesForSelectedFolder(
+                            folderId: folderId);
                       },
-                      child: Icon(
-                        Icons.more_vert,
-                      ),
-                    )
+                      child: Text("Try again"),
+                    ),
                   ],
-                )
-              ],
-            );
+                ),
+              );
+            } else if (snapshot.hasData) {
+              print(snapshot.data!.docs);
+              List<FileModel> files = [];
+              for (var doc in snapshot.data!.docs) {
+                files.add(FileModel.fromFireStore(fireStoreData: doc.data()));
+              }
+
+              return FilesGridView(
+                files: files,
+              );
+            }
+            return SizedBox();
           }),
     );
   }

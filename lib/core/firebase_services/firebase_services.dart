@@ -27,6 +27,15 @@ class FirebaseService {
         .snapshots();
   }
 
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getFilesForSelectedFolder(
+      {required String folderId}) async* {
+    yield* AppValues.userCollection
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("files")
+        .where("folder_id", isEqualTo: folderId)
+        .snapshots();
+  }
+
   static uploadFile({required String folderId}) async {
     List<File> files = [];
     FilePickerResult? result =
