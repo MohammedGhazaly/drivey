@@ -42,7 +42,9 @@ class DisplayFilesScreen extends StatelessWidget {
         ),
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: FirebaseService.getFilesForSelectedFolder(folderId: folderId),
+          stream: type == "folder"
+              ? FirebaseService.getFilesForSelectedFolder(folderId: folderId)
+              : FirebaseService.getFilesAccordingToType(fileType: type),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(

@@ -36,8 +36,9 @@ class FoldersSection extends StatelessWidget {
                       transition: Transition.leftToRightWithFade);
                   // دي طريقة البايندينج كده انا اول مادخل السكرينه
                   // الكونترولر بيبقي شغال واقدر اجيب الداتا مباشرة
+                  // علشان مايشهلهاش من الميموري لازم تعمل الطريقه دي
                   // Get.to(
-                  //     FilesInFolderScreen(
+                  //   ()=>  DisplayFilesScreen(
                   //       title: controller.foldersList[index].folderName,
                   //       type: "folder",
                   //       folderId: controller.foldersList[index].id,

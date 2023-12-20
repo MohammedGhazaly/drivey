@@ -2,7 +2,8 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class DownloadRemoveBottomSheet extends StatelessWidget {
-  const DownloadRemoveBottomSheet({super.key});
+  final String fileName;
+  const DownloadRemoveBottomSheet({super.key, required this.fileName});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +11,12 @@ class DownloadRemoveBottomSheet extends StatelessWidget {
       padding: EdgeInsets.all(32),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(fileName),
+          SizedBox(
+            height: 24,
+          ),
           InkWell(
             onTap: () {},
             child: Row(

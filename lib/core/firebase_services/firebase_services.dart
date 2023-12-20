@@ -37,6 +37,27 @@ class FirebaseService {
         .snapshots();
   }
 
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getFilesAccordingToType(
+      {required String fileType}) async* {
+    bool isDoc =
+        fileType != "video" && fileType != "audio" && fileType != "image";
+    if (isDoc) {
+      yield* AppValues.userCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("files")
+          // .orderBy("size", descending: true)
+          .where("file_type",
+              whereNotIn: ["video", "audio", "image"]).snapshots();
+    } else {
+      yield* AppValues.userCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("files")
+          // .orderBy("size", descending: true)
+          .where("file_type", isEqualTo: fileType)
+          .snapshots();
+    }
+  }
+
   static uploadFile({required String folderId}) async {
     List<File> files = [];
     FilePickerResult? result =

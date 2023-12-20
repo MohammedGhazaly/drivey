@@ -70,7 +70,9 @@ class FilesGridView extends StatelessWidget {
                         showModalBottomSheet(
                             context: context,
                             builder: (context) {
-                              return DownloadRemoveBottomSheet();
+                              return DownloadRemoveBottomSheet(
+                                fileName: files[index].name.split(".")[0],
+                              );
                             });
                       },
                       child: Icon(
