@@ -32,6 +32,7 @@ class FirebaseService {
     yield* AppValues.userCollection
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("files")
+        // .orderBy("size", descending: true)
         .where("folder_id", isEqualTo: folderId)
         .snapshots();
   }
@@ -78,8 +79,10 @@ class FirebaseService {
         // log("fileName: ${fileName}");
         // log("extenstion: ${extenstion}");
         // log("compressedFile: ${compressedFile}");
-        Get.snackbar("Uploading file.", "This my take sometime, please wait.",
-            duration: Duration(minutes: 15));
+        Get.snackbar(
+          "Uploading file.",
+          "This my take sometime, please wait.",
+        );
         await uploadToFireStorage(
             file: compressedFile,
             length: length,

@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drivey_files/controllers/files_controller.dart';
 import 'package:drivey_files/controllers/upload_folder_controller.dart';
 import 'package:drivey_files/core/firebase_services/firebase_services.dart';
 import 'package:drivey_files/core/utils/app_assets.dart';
 import 'package:drivey_files/core/utils/app_colors.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
-import 'package:drivey_files/screens/files_in_folder_screen.dart';
+import 'package:drivey_files/screens/display_files_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,12 +28,25 @@ class FoldersSection extends StatelessWidget {
               return InkWell(
                 onTap: () {
                   Get.to(
-                      FilesInFolderScreen(
+                      DisplayFilesScreen(
                         title: controller.foldersList[index].folderName,
                         type: "folder",
                         folderId: controller.foldersList[index].id,
                       ),
                       transition: Transition.leftToRightWithFade);
+                  // دي طريقة البايندينج كده انا اول مادخل السكرينه
+                  // الكونترولر بيبقي شغال واقدر اجيب الداتا مباشرة
+                  // Get.to(
+                  //     FilesInFolderScreen(
+                  //       title: controller.foldersList[index].folderName,
+                  //       type: "folder",
+                  //       folderId: controller.foldersList[index].id,
+                  //     ),
+                  //     binding: FilesBinding(
+                  //         type: "folder",
+                  //         folderId: controller.foldersList[index].id,
+                  //         isFolder: true),
+                  //     transition: Transition.leftToRightWithFade);
                 },
                 child: Container(
                   decoration: BoxDecoration(

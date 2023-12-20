@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
 import 'package:drivey_files/models/file_model.dart';
-import 'package:drivey_files/widgets/files_in_folder_screen/download_remove_bottom_sheet.dart';
+import 'package:drivey_files/widgets/display_files_screen/download_remove_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class FilesGridView extends StatelessWidget {
@@ -31,7 +31,7 @@ class FilesGridView extends StatelessWidget {
                         : Image.asset(
                             "assets/images/${files[index].extenstion}.png",
                             fit: BoxFit.cover,
-                            width: 75,
+                            // width: 75,
                           ),
                   ),
                 ),

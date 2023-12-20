@@ -1,21 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drivey_files/controllers/files_controller.dart';
 import 'package:drivey_files/core/firebase_services/firebase_services.dart';
 import 'package:drivey_files/core/utils/app_assets.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
 import 'package:drivey_files/models/file_model.dart';
-import 'package:drivey_files/widgets/files_in_folder_screen/download_remove_bottom_sheet.dart';
-import 'package:drivey_files/widgets/files_in_folder_screen/files_grid_view.dart';
+import 'package:drivey_files/widgets/display_files_screen/download_remove_bottom_sheet.dart';
+import 'package:drivey_files/widgets/display_files_screen/files_grid_view.dart';
 import 'package:drivey_files/widgets/files_screen/custom_image_widget.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class FilesInFolderScreen extends StatelessWidget {
+class DisplayFilesScreen extends StatelessWidget {
   final String title;
   final String type;
   final String folderId;
-  const FilesInFolderScreen(
+  // وتستعمل بقي او بي اكس تحت
+  // FilesController filesController = Get.find<FilesController>();
+  const DisplayFilesScreen(
       {super.key,
       required this.title,
       required this.type,
@@ -49,6 +51,7 @@ class FilesInFolderScreen extends StatelessWidget {
                 ),
               );
             } else if (snapshot.hasError) {
+              print(snapshot.error);
               return Center(
                 child: Column(
                   children: [
@@ -70,7 +73,6 @@ class FilesInFolderScreen extends StatelessWidget {
                 ),
               );
             } else if (snapshot.hasData) {
-              print(snapshot.data!.docs);
               List<FileModel> files = [];
               for (var doc in snapshot.data!.docs) {
                 files.add(FileModel.fromFireStore(fireStoreData: doc.data()));
