@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
 import 'package:drivey_files/models/file_model.dart';
 import 'package:drivey_files/widgets/display_files_screen/download_remove_bottom_sheet.dart';
+import 'package:drivey_files/widgets/view_file_screen/show_file_widget.dart';
+import 'package:drivey_files/widgets/view_file_screen/show_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class ViewFileScreen extends StatelessWidget {
@@ -38,13 +40,12 @@ class ViewFileScreen extends StatelessWidget {
         ],
       ),
       body: file.type == "image"
-          ? Center(
-              child: CachedNetworkImage(
-                imageUrl: file.url,
-                fit: BoxFit.cover,
-              ),
+          ? ShowImageWidget(
+              url: file.url,
             )
-          : Container(),
+          : ShowFileWidget(
+              fileModel: file,
+            ),
     );
   }
 }
