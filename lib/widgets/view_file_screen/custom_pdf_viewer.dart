@@ -57,6 +57,10 @@ class _CustomPdfViewerState extends State<CustomPdfViewer> {
             filePath: pdfFile.path,
             fitEachPage: false,
           )
-        : Container();
+        : Center(
+            child: const CircularProgressIndicator(
+              color: Colors.deepOrange,
+            ),
+          );
   }
 }
