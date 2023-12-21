@@ -52,6 +52,7 @@ class ViewFileScreen extends StatelessWidget {
               : file.type == "audio"
                   ? PlayAudioWidget(
                       url: file.url,
+                      name: file.name.split(".")[0],
                     )
                   : ShowFileWidget(
                       fileModel: file,

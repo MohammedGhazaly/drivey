@@ -6,7 +6,8 @@ import 'package:rxdart/rxdart.dart';
 
 class PlayAudioWidget extends StatefulWidget {
   final String url;
-  const PlayAudioWidget({super.key, required this.url});
+  final String name;
+  const PlayAudioWidget({super.key, required this.url, required this.name});
 
   @override
   State<PlayAudioWidget> createState() => _PlayAudioWidgetState();
@@ -45,6 +46,17 @@ class _PlayAudioWidgetState extends State<PlayAudioWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Text(
+            widget.name,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: StreamBuilder(
