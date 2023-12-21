@@ -12,30 +12,13 @@ class ViewVideoWidget extends StatefulWidget {
 
 class _ViewVideoWidgetState extends State<ViewVideoWidget> {
   late VideoPlayerController videoPlayerController;
-  late ChewieController? chewieController;
+  ChewieController? chewieController;
 
   @override
   void initState() {
     initilizeController();
-    super.initState();
 
-    // videoPlayerController =
-    //     VideoPlayerController.networkUrl(Uri.parse(widget.url));
-    // videoPlayerController.initialize().whenComplete(() {
-    //   chewieController = ChewieController(
-    //       videoPlayerController: videoPlayerController,
-    //       autoPlay: true,
-    //       looping: false);
-    // });
-    // // videoPlayerController.initialize().then((value) {
-    // //   chewieController = ChewieController(
-    // //       videoPlayerController: videoPlayerController,
-    // //       autoPlay: true,
-    // //       looping: false);
-    // // });
-    // // initilizeController();
-    // isInitilized = true;
-    // setState(() {});
+    super.initState();
   }
 
   Future<void> initilizeController() async {
@@ -43,9 +26,11 @@ class _ViewVideoWidgetState extends State<ViewVideoWidget> {
         VideoPlayerController.networkUrl(Uri.parse(widget.url));
     await videoPlayerController.initialize();
     chewieController = ChewieController(
+        allowFullScreen: true,
         videoPlayerController: videoPlayerController,
         autoPlay: true,
         looping: false);
+    // await Future.delayed(Duration(seconds: 2));
     setState(() {});
   }
 
