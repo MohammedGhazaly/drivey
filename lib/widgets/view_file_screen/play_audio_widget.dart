@@ -63,6 +63,9 @@ class _PlayAudioWidgetState extends State<PlayAudioWidget> {
               stream: positionDataStream,
               builder: ((context, snapshot) {
                 final positionData = snapshot.data;
+                print("position: ${positionData?.position}");
+                print("duration: ${positionData?.duration}");
+                print("buffered: ${positionData?.bufferedPosition}");
                 return ProgressBar(
                   timeLabelTextStyle: TextStyle(
                     height: 2,
@@ -70,7 +73,10 @@ class _PlayAudioWidgetState extends State<PlayAudioWidget> {
                   progress: positionData?.position ?? Duration.zero,
                   total: positionData?.duration ?? Duration.zero,
                   buffered: positionData?.bufferedPosition ?? Duration.zero,
-                  onSeek: audioPlayer.seek,
+                  // onSeek: audioPlayer.seek,
+                  onSeek: (duration) {
+                    audioPlayer.seek(duration);
+                  },
                 );
               }),
             ),
