@@ -141,7 +141,7 @@ class FirebaseService {
         .ref()
         .child("files")
         .child(FirebaseAuth.instance.currentUser!.uid)
-        .child("File $length: $fileName")
+        .child(fileName)
         .putFile(file, SettableMetadata(contentType: type));
     // uploadTask.snapshotEvents.listen((event) {
     //   print(object);

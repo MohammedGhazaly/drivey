@@ -38,7 +38,7 @@ class _DownloadRemoveBottomSheetState extends State<DownloadRemoveBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DownloadController());
+    final controller = Get.put(DownloadDeleteController());
     print(fileDownloaded);
 
     return Container(
@@ -72,7 +72,7 @@ class _DownloadRemoveBottomSheetState extends State<DownloadRemoveBottomSheet> {
                     await controller.downloadFile(widget.file);
                     Navigator.of(context).pop();
                   },
-                  child: GetBuilder<DownloadController>(builder: (_) {
+                  child: GetBuilder<DownloadDeleteController>(builder: (_) {
                     return Row(
                       children: [
                         controller.isDownloading
@@ -103,7 +103,10 @@ class _DownloadRemoveBottomSheetState extends State<DownloadRemoveBottomSheet> {
             height: 16,
           ),
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              await controller.deleteFile(widget.file);
+              Navigator.of(context).pop();
+            },
             child: Row(
               children: [
                 Icon(EvaIcons.fileRemove),
