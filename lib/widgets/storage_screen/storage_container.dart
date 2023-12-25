@@ -50,7 +50,7 @@ class StorageContainer extends StatelessWidget {
                     CircularPercentIndicator(
                       radius: 100,
                       lineWidth: 20,
-                      percent: 0.5,
+                      percent: storageController.totaleSize.value / 1000000,
                       progressColor: Colors.deepOrange,
                       backgroundColor: Colors.deepOrange.shade100,
                       circularStrokeCap: CircularStrokeCap.round,
