@@ -35,7 +35,7 @@ class ViewFileScreen extends StatelessWidget {
               showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return DownloadRemoveBottomSheet(fileName: file.name);
+                    return DownloadRemoveBottomSheet(file: file);
                   });
             },
           )

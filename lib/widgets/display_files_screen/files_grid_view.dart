@@ -69,7 +69,8 @@ class FilesGridView extends StatelessWidget {
                               context: context,
                               builder: (context) {
                                 return DownloadRemoveBottomSheet(
-                                  fileName: files[index].name.split(".")[0],
+                                  // file: files[index].name.split(".")[0],
+                                  file: files[index],
                                 );
                               });
                         },
