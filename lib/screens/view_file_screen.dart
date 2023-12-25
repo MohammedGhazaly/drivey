@@ -1,14 +1,14 @@
-import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:drivey_files/controllers/storage_controller.dart';
 import 'package:drivey_files/core/utils/app_styles.dart';
 import 'package:drivey_files/models/file_model.dart';
 import 'package:drivey_files/widgets/display_files_screen/download_remove_bottom_sheet.dart';
+import 'package:drivey_files/widgets/storage_screen/storage_container.dart';
 import 'package:drivey_files/widgets/view_file_screen/play_audio_widget.dart';
 import 'package:drivey_files/widgets/view_file_screen/show_file_widget.dart';
 import 'package:drivey_files/widgets/view_file_screen/show_image_widget.dart';
 import 'package:drivey_files/widgets/view_file_screen/view_video_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ViewFileScreen extends StatelessWidget {
   final FileModel file;
