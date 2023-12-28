@@ -5,6 +5,7 @@ A google drive clone built with Flutter, Firebase for backend, Getx for state ma
 - Firebase auth for authentication
 - Firestore for storing metadata of the user, files and folders
 - Firestorage for actually storing the files
+- Filepicker for picking the files
 - Getx for state management
 - mime for determining the file type and extenstion
 - video_compress & flutter_image_compress for compressing videos and images
